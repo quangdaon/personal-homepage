@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { GitHubRepository } from '$lib/resources/github/github';
+	import Card from '../layout/Card.svelte';
 
 	type Props = {
 		repositories: GitHubRepository[];
@@ -16,15 +17,17 @@
 	};
 </script>
 
-<h3>Recent Repositories</h3>
+<Card>
+	<h3>Recent Repositories</h3>
 
-<ul>
-	{#each repositories as repo}
-		{@const tags = getTags(repo)}
-		<li>
-			<a href={repo.url}>{repo.title}</a>
-			{#if tags.length}({tags.join(', ')}){/if}
-			| {repo.language}
-		</li>
-	{/each}
-</ul>
+	<ul>
+		{#each repositories as repo}
+			{@const tags = getTags(repo)}
+			<li>
+				<a href={repo.url}>{repo.title}</a>
+				{#if tags.length}({tags.join(', ')}){/if}
+				| {repo.language}
+			</li>
+		{/each}
+	</ul>
+</Card>

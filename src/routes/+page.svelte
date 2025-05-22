@@ -11,6 +11,3 @@
 </script>
 
 <GitHubRepositories repositories={gitHubRepositories} />
-
-<style>
-</style>

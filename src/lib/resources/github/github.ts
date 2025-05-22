@@ -20,7 +20,7 @@ export const getRepositories = async (): Promise<GitHubRepository[]> => {
 	const repos = await octokit.request('GET /user/repos', {
 		sort: 'pushed',
 		direction: 'desc',
-		per_page: 12,
+		per_page: 6,
 		headers: {
 			'X-GitHub-Api-Version': '2022-11-28'
 		}
@@ -30,7 +30,7 @@ export const getRepositories = async (): Promise<GitHubRepository[]> => {
 		(e): GitHubRepository => ({
 			id: e.id,
 			title: e.name,
-      url: e.url,
+      url: e.html_url,
       updated: e.updated_at ? new Date(e.updated_at) : null,
 			org: e.owner.type === 'Organization' ? e.owner.login : '',
 			private: e.visibility !== 'public',

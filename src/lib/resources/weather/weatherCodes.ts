@@ -231,7 +231,7 @@ const WMO_99_THUNDERSTORM_HEAVY_HAIL: WeatherDetails = {
 	group: WMO_GROUP_THUNDERSTORM_HAIL
 };
 
-const WMO_UNKNOWN: WeatherDetails = {
+export const WMO_UNKNOWN: WeatherDetails = {
 	description: 'Unknown'
 };
 // #endregion

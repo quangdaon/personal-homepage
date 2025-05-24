@@ -2,7 +2,6 @@
 	import type { GitHubRepository } from '$lib/resources/github';
 	import Card from '../layout/Card.svelte';
 	import Tile from '../layout/Tile.svelte';
-	import FormattedDate from '../utils/FormattedDate.svelte';
 	import FormattedDateTime from '../utils/FormattedDateTime.svelte';
 
 	type Props = {

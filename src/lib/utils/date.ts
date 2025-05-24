@@ -1,17 +1,15 @@
-export const convertDate = (date: Date) =>
-	new Date(date.setMinutes(date.getMinutes() + date.getTimezoneOffset()));
+export type DateLike = string | Date;
 
-export const formatDateTimeString = (date: string) =>
-	formatDateString(date, { dateStyle: 'long', timeStyle: 'medium' });
+export const formatDateTimeString = (date: DateLike) =>
+	formatDateString(date, { dateStyle: 'long', timeStyle: 'short', hour12: false });
 
 export const formatDateString = (
-	date: string,
+	date: DateLike,
 	options: Intl.DateTimeFormatOptions | null = null
 ) => {
 	const parsedDate = new Date(date);
-	const convertedDate = convertDate(parsedDate);
 
-	return formatDate(convertedDate, options);
+	return formatDate(parsedDate, options);
 };
 
 export const formatDate = (

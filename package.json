@@ -41,6 +41,7 @@
 	"dependencies": {
 		"@octokit/core": "^7.0.2",
 		"drizzle-orm": "^0.40.0",
+		"openmeteo": "^1.2.0",
 		"postgres": "^3.4.5"
 	}
 }

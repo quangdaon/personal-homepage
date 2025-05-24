@@ -1,4 +1,4 @@
-import { getRepositories } from '$lib/resources/github/github';
+import { getRepositories } from '$lib/resources/github';
 import { json } from '@sveltejs/kit';
 
 export async function GET() {

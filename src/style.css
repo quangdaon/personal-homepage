@@ -1,6 +1,6 @@
 :root {
   --color-foreground: #fff;
-  --color-card: rgba(0, 0, 0, 0.7);
+  --color-card: rgba(0, 0, 0, 0.2);
 }
 
 html, body {

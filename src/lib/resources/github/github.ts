@@ -10,10 +10,10 @@ export interface GitHubRepository {
 	title: string;
 	private: boolean;
 	url: string;
-  updated: Date | null;
+	updated: Date | string;
 	org: string;
 	language?: string | null;
-  topics: string[];
+	topics: string[];
 }
 
 export const getRepositories = async (): Promise<GitHubRepository[]> => {
@@ -30,8 +30,8 @@ export const getRepositories = async (): Promise<GitHubRepository[]> => {
 		(e): GitHubRepository => ({
 			id: e.id,
 			title: e.name,
-      url: e.html_url,
-      updated: e.updated_at ? new Date(e.updated_at) : null,
+			url: e.html_url,
+			updated: e.updated_at ? new Date(e.updated_at) : '',
 			org: e.owner.type === 'Organization' ? e.owner.login : '',
 			private: e.visibility !== 'public',
 			language: e.language,

@@ -1,6 +1,9 @@
 <script lang="ts">
 	import type { GitHubRepository } from '$lib/resources/github/github';
 	import Card from '../layout/Card.svelte';
+	import Tile from '../layout/Tile.svelte';
+	import FormattedDate from '../utils/FormattedDate.svelte';
+	import FormattedDateTime from '../utils/FormattedDateTime.svelte';
 
 	type Props = {
 		repositories: GitHubRepository[];
@@ -23,12 +26,15 @@
 	<ul>
 		{#each repositories as repo}
 			{@const tags = getTags(repo)}
-			<li class="tile">
+			<li>
 				<a href={repo.url}>
-					<div>
+					<Tile>
 						<h4>{repo.title}</h4>
-						<p class="detail"><b>{repo.language}</b> | <i>Last Updated {repo.updated}</i></p>
-					</div>
+						<p class="detail">
+							<b>{repo.language}</b> |
+							<i>Last Updated <FormattedDateTime date={repo.updated?.toString()} /></i>
+						</p>
+					</Tile>
 				</a>
 			</li>
 		{/each}
@@ -40,22 +46,17 @@
 		list-style-type: none;
 		padding: 0;
 	}
-	.tile {
+	li {
 		margin: 1em 0;
 		line-height: 1;
 
 		a {
 			text-decoration: none;
-			display: block;
-			background: #050505;
-			padding: 0.5em;
-			border-radius: 0.5em;
-
 			&:hover {
 				h4 {
 					text-decoration: underline;
 				}
-			}	
+			}
 		}
 
 		h4 {

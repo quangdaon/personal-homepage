@@ -11,7 +11,7 @@
 		padding: 1em;
     color: var(--color-foreground);
 		background: var(--color-card);
-		backdrop-filter: blur(0.5em);
+		backdrop-filter: var(--effect-card);
     margin: 1em;
     border-radius: 1em;
 		display: flex;

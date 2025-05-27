@@ -12,6 +12,7 @@ const getClock = (): ClockValues => {
 	const timeFormatter = new Intl.DateTimeFormat('en-US', { timeStyle: 'short', hour12: false });
 	const fullTimeFormatter = new Intl.DateTimeFormat('en-US', { timeStyle: 'long', hour12: false });
 	const dateFormatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'full' });
+	
 	return {
 		time: timeFormatter.format(now),
 		fullTime: fullTimeFormatter.format(now),

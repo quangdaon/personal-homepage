@@ -20,7 +20,7 @@ export const getRepositories = async (): Promise<GitHubRepository[]> => {
 	const repos = await octokit.request('GET /user/repos', {
 		sort: 'pushed',
 		direction: 'desc',
-		per_page: 6,
+		per_page: 18,
 		headers: {
 			'X-GitHub-Api-Version': '2022-11-28'
 		}

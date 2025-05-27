@@ -3,6 +3,7 @@
 	import Card from '../layout/Card.svelte';
 	import Tile from '../layout/Tile.svelte';
 	import FormattedDateTime from '../utils/FormattedDateTime.svelte';
+	import Paginator from '../utils/Paginator.svelte';
 
 	type Props = {
 		repositories: GitHubRepository[];
@@ -10,18 +11,16 @@
 
 	const { repositories }: Props = $props();
 
-	const getTags = (repo: GitHubRepository) => {
-		const tags = [];
-
-		// if (repo.org) tags.push(repo.org);
-		if (repo.private) tags.push('private');
-		return tags;
-	};
+	const pageSize = 6;
+	let page: number = $state(1);
+	let pageStartIndex = $derived((page - 1) * pageSize);
+	let maxPage = $derived(Math.ceil(repositories.length / pageSize));
+	let pageRepos = $derived(repositories.slice(pageStartIndex, pageStartIndex + pageSize));
 
 	const getTitle = (repo: GitHubRepository) => {
 		let title = repo.title;
 
-		if(repo.org) title += ` (${repo.org})`
+		if (repo.org) title += ` (${repo.org})`;
 
 		return title;
 	};
@@ -31,7 +30,7 @@
 	<h3>Recent Repositories</h3>
 
 	<ul>
-		{#each repositories as repo}
+		{#each pageRepos as repo}
 			{@const title = getTitle(repo)}
 			<li>
 				<a href={repo.url}>
@@ -46,6 +45,8 @@
 			</li>
 		{/each}
 	</ul>
+
+	<Paginator current={page} max={maxPage} onNavigated={(p) => (page = p)} />
 </Card>
 
 <style lang="scss">

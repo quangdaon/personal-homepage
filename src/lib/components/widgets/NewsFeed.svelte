@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { FeedItem } from '$lib/resources/feeds';
 	import Card from '../layout/Card.svelte';
+	import Paginator from '../utils/Paginator.svelte';
 
 	interface Props {
 		title: string;
@@ -12,6 +13,7 @@
 	const pageSize = 12;
 	let page: number = $state(1);
 	let pageStartIndex = $derived((page - 1) * pageSize);
+	let maxPage = $derived(Math.ceil(feed.length / pageSize));
 	let feedItems = $derived(feed.slice(pageStartIndex, pageStartIndex + pageSize));
 </script>
 
@@ -22,4 +24,6 @@
 			<li><a href={entry.url}>{entry.title}</a></li>
 		{/each}
 	</ul>
+
+	<Paginator current={page} max={maxPage} onNavigated={(p) => (page = p)} />
 </Card>

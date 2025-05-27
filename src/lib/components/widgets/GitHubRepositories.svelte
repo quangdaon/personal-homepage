@@ -57,14 +57,6 @@
 				}
 			}
 		}
-
-		h4 {
-			margin: 0 0 0.5em;
-		}
-
-		p {
-			margin: 0;
-		}
 	}
 
 	.detail {

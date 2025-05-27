@@ -28,7 +28,6 @@ export const getWeather = async (): Promise<WeatherReport> => {
 
   const weatherCode = current.variables(1)!.value();
   
-  console.log(current.time());
 	return {
 		updated: new Date((Number(current.time()) + utcOffsetSeconds) * 1000).toISOString(),
 		current: {

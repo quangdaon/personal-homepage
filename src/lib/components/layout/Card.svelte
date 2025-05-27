@@ -6,7 +6,7 @@
 	{@render children()}
 </div>
 
-<style>
+<style lang="scss">
 	.card {
 		padding: 1em;
     color: var(--color-foreground);
@@ -14,6 +14,9 @@
 		backdrop-filter: blur(0.5em);
     margin: 1em;
     border-radius: 1em;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
 	}
 
 	.card :global(a) {

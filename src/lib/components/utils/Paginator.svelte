@@ -17,7 +17,7 @@
 	const options = $derived(getOptions(current, max));
 </script>
 
-<div class="navigator">
+<div class="paginator">
 	{#if !hideRelevantControls}
 		<button class="relative" disabled={options.includes(1)} onclick={() => onNavigated(1)}
 			>&laquo;</button
@@ -43,9 +43,10 @@
 </div>
 
 <style lang="scss">
-	.navigator {
+	.paginator {
 		display: flex;
 		justify-content: center;
+    margin-top: auto;
 		button {
 			cursor: pointer;
 			margin: 0 0.125em;
@@ -53,6 +54,7 @@
 			border: none;
 			color: inherit;
 			opacity: 0.7;
+      font-family: var(--font-mono);
 			&:disabled,
 			&:hover {
 				opacity: 1;

@@ -8,7 +8,8 @@ export async function load({ fetch }) {
 		weather: await fetchApi('weather'),
 		gitHubRepositories: await fetchApi('github/repositories'),
 		feeds: {
-			general: await fetchApi('feeds/general')
+			general: await fetchApi('feeds/general'),
+			tech: await fetchApi('feeds/tech')
 		}
 	};
 }

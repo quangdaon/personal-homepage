@@ -13,7 +13,57 @@
 	const { gitHubRepositories, weather, feeds } = data;
 </script>
 
-<Clock />
-<Weather {weather} />
-<GitHubRepositories repositories={gitHubRepositories} />
-<NewsFeed title="General News" feed={feeds.general} />
+<main class="container">
+	<div class="header">
+		<Clock />
+	</div>
+	<div class="content">
+		<div class="news">
+			<NewsFeed title="General News" feed={feeds.general} />
+			<NewsFeed title="Tech News" feed={feeds.tech} />
+		</div>
+		<div class="aside">
+			<Weather {weather} />
+			<GitHubRepositories repositories={gitHubRepositories} />
+		</div>
+	</div>
+</main>
+
+<style lang="scss">
+	.container {
+		display: flex;
+		flex-direction: column;
+		height: 100vh;
+	}
+
+	.header {
+		flex: 0  0 1;
+		margin: 2em 0 0;
+	}
+
+	.content {
+		display: flex;
+		flex: 1 1 auto;
+	}
+
+	.news {
+		flex: 0 0 70%;
+		display: flex;
+		flex-direction: column;
+		:global(.card) {
+			flex: 1 1 0;
+		}
+	}
+
+	.aside {
+		flex: 1 1 auto;
+		display: flex;
+		flex-direction: column;
+		:global(.card) {
+			flex: 0 0 auto;
+		}
+		:global(.card:last-child) {
+			flex: 1 1 0;
+		}
+	}
+</style>

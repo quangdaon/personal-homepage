@@ -1,12 +1,16 @@
 :root {
 	--color-foreground: #fff;
-	--color-card: rgba(0, 0, 0, 0.2);
+	--color-card: rgba(0, 0, 0, 0.3);
+
+	--font-default: 'Roboto', sans-serif;
+	--font-mono: 'Roboto Mono', monospace;
 }
 
 html,
 body {
 	min-height: 100%;
 	margin: 0;
+	font-size: 16px;
 }
 
 body {
@@ -14,7 +18,7 @@ body {
 	background-size: cover;
 	background-position: bottom center;
 	background-attachment: fixed;
-	font-family: 'Roboto', sans-serif;
+	font-family: var(--font-default);
 	line-height: 2;
 	color: var(--color-foreground);
 }

@@ -11,7 +11,6 @@
 	.clock {
 		text-align: center;
 		text-shadow: 0 0 2em #000;
-		margin: 2em 0;
 	}
 
 	h1,

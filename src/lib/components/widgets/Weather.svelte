@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { WeatherReport } from '$lib/resources/weather';
 	import Card from '../layout/Card.svelte';
-	import FormattedDateTime from '../utils/FormattedDateTime.svelte';
+	import { formatDateTimeString } from '../../utils/date';
 
 	interface Props {
 		weather: WeatherReport;
@@ -11,8 +11,7 @@
 </script>
 
 <Card>
-  <h3>Current Weather</h3>
-  <p><i>Last Updated: <FormattedDateTime date={weather.updated} /></i></p>
-  <p>Temperature: {weather.current.temperature.toFixed(0)} &deg;F</p>
-  <p>What it's like outside: {weather.current.weather.description}</p>
+	<h3 title="Last Updated: {formatDateTimeString(weather.updated)}">Current Weather</h3>
+	<p>Temperature: {weather.current.temperature.toFixed(0)} &deg;F</p>
+	<p>What it's like outside: {weather.current.weather.description}</p>
 </Card>

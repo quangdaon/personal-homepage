@@ -17,6 +17,14 @@
 		if (repo.private) tags.push('private');
 		return tags;
 	};
+
+	const getTitle = (repo: GitHubRepository) => {
+		let title = repo.title;
+
+		if(repo.org) title += ` (${repo.org})`
+
+		return title;
+	};
 </script>
 
 <Card>
@@ -24,11 +32,11 @@
 
 	<ul>
 		{#each repositories as repo}
-			{@const tags = getTags(repo)}
+			{@const title = getTitle(repo)}
 			<li>
 				<a href={repo.url}>
 					<Tile>
-						<h4>{repo.title}</h4>
+						<h4>{title}</h4>
 						<p class="detail">
 							<b>{repo.language}</b> |
 							<i>Last Updated <FormattedDateTime date={repo.updated?.toString()} /></i>

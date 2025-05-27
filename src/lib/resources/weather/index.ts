@@ -1,6 +1,8 @@
 import { fetchWeatherApi } from 'openmeteo';
 import { weatherCodes, WMO_UNKNOWN, type WeatherDetails } from './weatherCodes';
 
+const OPEN_METEO_URL = 'https://api.open-meteo.com/v1/forecast';
+
 export interface WeatherReport {
 	updated: string;
 	current: {
@@ -18,8 +20,7 @@ export const getWeather = async (): Promise<WeatherReport> => {
 		daily: 'weather_code,temperature_2m_max,temperature_2m_min',
 		temperature_unit: 'fahrenheit'
 	};
-	const url = 'https://api.open-meteo.com/v1/forecast';
-	const responses = await fetchWeatherApi(url, params);
+	const responses = await fetchWeatherApi(OPEN_METEO_URL, params);
 
 	const response = responses[0];
 

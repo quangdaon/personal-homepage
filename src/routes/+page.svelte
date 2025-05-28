@@ -19,8 +19,7 @@
 	</div>
 	<div class="content">
 		<div class="news">
-			<NewsFeed title="General News" feed={feeds.general} />
-			<NewsFeed title="Tech News" feed={feeds.tech} />
+			<NewsFeed {feeds} />
 		</div>
 		<div class="aside">
 			<Weather {weather} />

@@ -35,7 +35,7 @@
 			<li>
 				<a href={repo.url}>
 					<Tile>
-						<h4>{title}</h4>
+						<h4>{#if repo.private}🔒{/if} {title}</h4>
 						<p class="detail">
 							<b>{repo.language}</b> |
 							<i>Last Updated <FormattedDateTime date={repo.updated?.toString()} /></i>

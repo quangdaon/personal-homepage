@@ -9,6 +9,7 @@ export async function load({ fetch }) {
 		gitHubRepositories: await fetchApi('github/repositories'),
 		feeds: {
 			general: await fetchApi('feeds/general'),
+			local: await fetchApi('feeds/local'),
 			tech: await fetchApi('feeds/tech')
 		}
 	};

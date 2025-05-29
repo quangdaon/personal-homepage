@@ -30,6 +30,7 @@
 
 	const feedSelectors: FeedSelector[] = [
 		{ value: 'general', label: 'General' },
+		{ value: 'local', label: 'Local' },
 		{ value: 'tech', label: 'Tech' }
 	];
 

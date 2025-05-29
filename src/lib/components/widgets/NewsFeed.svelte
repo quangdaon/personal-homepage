@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { FeedItem, FeedSourceKey } from '$lib/resources/feeds';
-	import { tick } from 'svelte';
 	import Card from '../layout/Card.svelte';
 	import Loader from '../utils/Loader.svelte';
 	import Paginator from '../utils/Paginator.svelte';

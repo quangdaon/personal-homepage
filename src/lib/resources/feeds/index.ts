@@ -1,4 +1,6 @@
+import { OPENAI_SECRET_KEY } from '$env/static/private';
 import type { DateLike } from '$lib/utils/date';
+import OpenAI from 'openai';
 import Parser from 'rss-parser';
 const parser = new Parser();
 
@@ -65,4 +67,33 @@ export const getFeed = async (source: FeedSourceKey): Promise<FeedItem[]> => {
 	});
 
 	return items.toSorted((a, b) => (b.date > a.date ? 1 : -1));
+};
+
+export const generateAiSummary = async (articles: string[]) => {
+	const openai = new OpenAI({
+		apiKey: OPENAI_SECRET_KEY
+	});
+
+	const gptMessages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
+		{
+			role: 'system',
+			content:
+				'Given a JSON list of news articles, generate a very brief TLDR-style summary of the most interesting or impactful developments. Output your response as a single short plaintext paragraph (e.g. no Markdown).'
+		},
+		{
+			role: 'user',
+			content: JSON.stringify(articles)
+		}
+	];
+
+	const chatCompletion = await openai.chat.completions.create({
+		messages: gptMessages,
+		model: 'gpt-4o-mini',
+		temperature: 1,
+		max_completion_tokens: 240
+	});
+
+	const answer = chatCompletion.choices[0];
+
+	return answer.message;
 };

@@ -37,6 +37,10 @@ p {
 }
 
 button {
+	cursor: pointer;
 	font-family: inherit;
 	font-size: 1em;
+	&:disabled {
+		cursor: default;
+	}
 }

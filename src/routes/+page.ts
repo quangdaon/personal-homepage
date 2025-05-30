@@ -4,13 +4,21 @@ export async function load({ fetch }) {
 		return await response.json();
 	};
 
+	const [weather, gitHubRepositories, generalNews, localNews, techNews] = await Promise.all([
+		fetchApi('weather'),
+		fetchApi('github/repositories'),
+		fetchApi('feeds/general'),
+		fetchApi('feeds/local'),
+		fetchApi('feeds/tech')
+	]);
+
 	return {
-		weather: await fetchApi('weather'),
-		gitHubRepositories: await fetchApi('github/repositories'),
+		weather,
+		gitHubRepositories,
 		feeds: {
-			general: await fetchApi('feeds/general'),
-			local: await fetchApi('feeds/local'),
-			tech: await fetchApi('feeds/tech')
+			general: generalNews,
+			local: localNews,
+			tech: techNews
 		}
 	};
 }

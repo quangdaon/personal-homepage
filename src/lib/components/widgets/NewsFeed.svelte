@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { FeedItem, FeedSourceKey } from '$lib/resources/feeds';
 	import Card from '../layout/Card.svelte';
+	import Modal from '../messaging/Modal.svelte';
 	import Loader from '../utils/Loader.svelte';
 	import Paginator from '../utils/Paginator.svelte';
 
@@ -21,6 +22,8 @@
 	let summariesCache: Partial<Record<FeedSourceKey, Promise<string>>> = {};
 	let summaryAborter: AbortController | undefined;
 	let isSummaryPending = $state(false);
+	let summary = $state('');
+	let summaryOpen = $state(false);
 
 	interface FeedSelector {
 		value: FeedSourceKey;
@@ -47,10 +50,10 @@
 		summaryAborter = new AbortController();
 
 		isSummaryPending = true;
-		const summary = await getCacheableSummary(activeFeed);
+		summary = await getCacheableSummary(activeFeed);
 		isSummaryPending = false;
 
-		if (!summaryAborter.signal.aborted) alert(summary);
+		if (!summaryAborter.signal.aborted) summaryOpen = true;
 	};
 
 	const getCacheableSummary = async (key: FeedSourceKey) => {
@@ -112,6 +115,10 @@
 
 	<Paginator current={page} max={maxPage} onNavigated={(p) => (page = p)} />
 </Card>
+
+<Modal open={summaryOpen} onClosed={() => summaryOpen =false}>
+	{summary}
+</Modal>
 
 <style lang="scss">
 	h3 {

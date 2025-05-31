@@ -19,7 +19,6 @@
 	let maxPage = $derived(Math.ceil(feed.length / pageSize));
 	let feedItems = $derived(feed.slice(pageStartIndex, pageStartIndex + pageSize));
 
-	let summariesCache: Partial<Record<FeedSourceKey, Promise<string>>> = {};
 	let summaryAborter: AbortController | undefined;
 	let isSummaryPending = $state(false);
 	let summary = $state('');
@@ -54,17 +53,6 @@
 		isSummaryPending = false;
 
 		if (!summaryAborter.signal.aborted) summaryOpen = true;
-	};
-
-	const getCacheableSummary = async (key: FeedSourceKey) => {
-		const found = summariesCache[key];
-
-		if (found) return await found;
-
-		const summary = found ?? generateSummary(key);
-		summariesCache[key] = summary;
-
-		return summary;
 	};
 
 	const generateSummary = async (key: FeedSourceKey) => {

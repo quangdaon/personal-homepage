@@ -53,9 +53,10 @@
 	ul {
 		list-style-type: none;
 		padding: 0;
+		margin: 0;
 	}
 	li {
-		margin: 1em 0;
+		margin: 0 0 1em;
 		line-height: 1;
 
 		a {

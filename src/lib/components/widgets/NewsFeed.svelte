@@ -104,8 +104,15 @@
 	<ul class="feed-list">
 		{#each feedItems as entry}
 			<li class="feed-item">
-				<img class="feed-icon" src={entry.source.icon} alt={entry.source.title} title={entry.source.title} />
-				<FormattedDateTime date={entry.date} /> &mdash;
+				<img
+					class="feed-icon"
+					src={entry.source.icon}
+					alt={entry.source.title}
+					title={entry.source.title}
+				/>
+				{#if entry.date}
+					<FormattedDateTime date={entry.date} /> &mdash;
+				{/if}
 				<a href={entry.url}>{entry.title}</a>
 			</li>
 		{/each}

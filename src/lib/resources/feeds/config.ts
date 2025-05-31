@@ -16,8 +16,7 @@ export const feedSources = {
 			title: 'Google News',
 			url: 'https://news.google.com/news/rss/headlines/section/topic/NATION?ned=us&hl=en&gl=US',
 			icon: '/images/icons/feeds/google-news.png'
-		},
-		{ title: 'CNN', url: 'http://rss.cnn.com/rss/edition.rss', icon: '/images/icons/feeds/cnn.png' }
+		}
 	],
 	local: [
 		{

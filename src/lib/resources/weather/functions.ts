@@ -1,5 +1,5 @@
 import { fetchWeatherApi } from 'openmeteo';
-import { weatherCodes, WMO_UNKNOWN } from './weatherCodes';
+import { weatherCodes, WMO_UNKNOWN } from './weather-codes';
 import { OPEN_METEO_URL } from './config';
 import type { WeatherReport } from './models';
 

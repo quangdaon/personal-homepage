@@ -1,12 +1,4 @@
-export interface WeatherGroup {
-	description: string;
-}
-
-export interface WeatherDetails {
-	wmoCode?: number;
-	description: string;
-	group?: WeatherGroup;
-}
+import type { WeatherGroup, WeatherDetails } from './models';
 
 // #region Groups
 const WMO_GROUP_CLEAR: WeatherGroup = {

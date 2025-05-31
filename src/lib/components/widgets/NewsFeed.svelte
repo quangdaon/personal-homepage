@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import type { FeedItem, FeedSourceKey } from '$lib/resources/feeds';
 	import Card from '../layout/Card.svelte';
 	import Modal from '../messaging/Modal.svelte';
@@ -12,7 +13,7 @@
 
 	const { feeds, aiSummaryEnabled }: Props = $props();
 
-	const pageSize = 20;
+	const pageSize = !browser || document.body.clientWidth > 1200 ? 20 : 4;
 	let activeFeed: FeedSourceKey = $state('general');
 	let feed = $derived(feeds[activeFeed]);
 	let page: number = $state(1);

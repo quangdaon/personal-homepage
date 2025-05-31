@@ -30,27 +30,33 @@
 
 <style lang="scss">
 	.container {
-		display: flex;
-		flex-direction: column;
-		height: 100vh;
+		@media only screen and (min-width: 1200px) {
+			height: 100vh;
+			display: flex;
+			flex-direction: column;
+		}
 	}
 
 	.header {
-		flex: 0  0 1;
+		flex: 0 0 1;
 		margin: 2em 0 0;
 	}
 
 	.content {
-		display: flex;
-		flex: 1 1 auto;
+		@media only screen and (min-width: 1200px) {
+			display: flex;
+			flex: 1 1 auto;
+		}
 	}
 
 	.news {
-		flex: 0 0 70%;
-		display: flex;
-		flex-direction: column;
 		:global(.card) {
 			flex: 1 1 0;
+		}
+		@media only screen and (min-width: 1200px) {
+			flex: 0 0 70%;
+			display: flex;
+			flex-direction: column;
 		}
 	}
 

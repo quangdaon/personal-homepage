@@ -7,9 +7,10 @@
 
 	interface Props {
 		feeds: Record<string, FeedItem[]>;
+		aiSummaryEnabled: boolean;
 	}
 
-	const { feeds }: Props = $props();
+	const { feeds, aiSummaryEnabled }: Props = $props();
 
 	const pageSize = 20;
 	let activeFeed: FeedSourceKey = $state('general');
@@ -75,18 +76,21 @@
 <Card>
 	<h3>
 		Latest News
-		<button
-			disabled={isSummaryPending}
-			onclick={() => summarize()}
-			title="Summarize"
-			aria-label="Summarize"
-		>
-			{#if isSummaryPending}
-				<Loader />
-			{:else}
-				<iconify-icon icon="subway:paragraph-5"></iconify-icon>
-			{/if}
-		</button>
+
+		{#if aiSummaryEnabled}
+			<button
+				disabled={isSummaryPending}
+				onclick={() => summarize()}
+				title="Summarize"
+				aria-label="Summarize"
+			>
+				{#if isSummaryPending}
+					<Loader />
+				{:else}
+					<iconify-icon icon="subway:paragraph-5"></iconify-icon>
+				{/if}
+			</button>
+		{/if}
 	</h3>
 	<div class="nav">
 		{#each feedSelectors as selector}
@@ -104,7 +108,7 @@
 	<Paginator current={page} max={maxPage} onNavigated={(p) => (page = p)} />
 </Card>
 
-<Modal open={summaryOpen} onClosed={() => summaryOpen =false}>
+<Modal open={summaryOpen} onClosed={() => (summaryOpen = false)}>
 	{summary}
 </Modal>
 

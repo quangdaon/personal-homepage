@@ -10,7 +10,7 @@
 	}
 
 	const { data }: Props = $props();
-	const { gitHubRepositories, weather, feeds } = data;
+	const { gitHubRepositories, weather, feeds, aiSummaryEnabled } = data;
 </script>
 
 <main class="container">
@@ -19,7 +19,7 @@
 	</div>
 	<div class="content">
 		<div class="news">
-			<NewsFeed {feeds} />
+			<NewsFeed {feeds} {aiSummaryEnabled} />
 		</div>
 		<div class="aside">
 			<Weather {weather} />

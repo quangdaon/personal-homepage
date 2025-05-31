@@ -1,4 +1,4 @@
-export async function load({ fetch }) {
+export async function load({ fetch, data }) {
 	const fetchApi = async (slug: string) => {
 		const response = await fetch('/api/' + slug); // TODO: path.join
 		return await response.json();
@@ -13,6 +13,7 @@ export async function load({ fetch }) {
 	]);
 
 	return {
+		...(data as unknown as { aiSummaryEnabled: boolean }),
 		weather,
 		gitHubRepositories,
 		feeds: {

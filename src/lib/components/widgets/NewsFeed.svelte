@@ -3,6 +3,7 @@
 	import type { FeedItem, FeedSourceKey } from '$lib/resources/feeds';
 	import Card from '../layout/Card.svelte';
 	import Modal from '../messaging/Modal.svelte';
+	import FormattedDateTime from '../utils/FormattedDateTime.svelte';
 	import Loader from '../utils/Loader.svelte';
 	import Paginator from '../utils/Paginator.svelte';
 
@@ -100,9 +101,13 @@
 			</button>
 		{/each}
 	</div>
-	<ul>
+	<ul class="feed-list">
 		{#each feedItems as entry}
-			<li><a title={entry.source.title} href={entry.url}>{entry.title}</a></li>
+			<li class="feed-item">
+				<img class="feed-icon" src={entry.source.icon} alt={entry.source.title} title={entry.source.title} />
+				<FormattedDateTime date={entry.date} /> &mdash;
+				<a href={entry.url}>{entry.title}</a>
+			</li>
 		{/each}
 	</ul>
 
@@ -140,6 +145,20 @@
 				background: var(--color-foreground);
 				color: #000;
 			}
+		}
+	}
+
+	.feed {
+		&-list {
+			list-style-type: none;
+			padding: 0;
+		}
+		&-icon {
+			display: inline-block;
+			vertical-align: middle;
+			width: 1.2em;
+			margin-right: 0.25em;
+			aspect-ratio: 1;
 		}
 	}
 </style>

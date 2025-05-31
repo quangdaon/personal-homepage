@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { formatDateTimeString } from '$lib/resources/temporal';
+	import { formatDateTimeString, type DateLike } from '$lib/resources/temporal';
 
 	interface Props {
-		date: string;
+		date: DateLike;
 	}
 
 	const { date }: Props = $props();

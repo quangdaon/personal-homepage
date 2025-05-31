@@ -3,6 +3,7 @@ import type { DateLike } from '$lib/resources/temporal';
 export interface FeedDetails {
 	title: string;
 	url: string;
+	icon: string;
 }
 
 export interface FeedItem {
@@ -12,5 +13,6 @@ export interface FeedItem {
 	date: DateLike;
 	source: {
 		title: string;
+		icon: string;
 	};
 }

@@ -1,7 +1,12 @@
 export type DateLike = string | Date;
 
-export const formatDateTimeString = (date: DateLike) =>
-	formatDateString(date, { dateStyle: 'long', timeStyle: 'short', hour12: false });
+export const formatDateTimeString = (date: DateLike) => {
+	return formatDateString(date, {
+		dateStyle: 'long',
+		timeStyle: 'short',
+		hour12: false
+	});
+};
 
 export const formatDateString = (
 	date: DateLike,

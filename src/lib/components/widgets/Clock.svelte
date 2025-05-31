@@ -1,5 +1,5 @@
 <script>
-	import { currentTime } from '$lib/utils/time';
+	import { currentTime } from '$lib/resources/temporal';
 </script>
 
 <div class="clock">

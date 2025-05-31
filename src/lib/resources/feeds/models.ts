@@ -1,4 +1,4 @@
-import type { DateLike } from '$lib/utils/date';
+import type { DateLike } from '$lib/resources/temporal';
 
 export interface FeedDetails {
 	title: string;

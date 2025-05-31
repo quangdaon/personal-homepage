@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { formatDateString } from '$lib/utils/date';
+	import { formatDateString } from '$lib/resources/temporal';
 
 	interface Props {
 		date: string;

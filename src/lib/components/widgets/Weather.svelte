@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { WeatherReport } from '$lib/resources/weather';
+	import { formatDateTimeString } from '$lib/resources/temporal';
 	import Card from '../layout/Card.svelte';
-	import { formatDateTimeString } from '../../utils/date';
 
 	interface Props {
 		weather: WeatherReport;

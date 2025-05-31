@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import type { FeedItem, FeedSourceKey } from '$lib/resources/feeds';
+	import type { FeedItem } from '$lib/resources/feeds';
 	import Card from '../layout/Card.svelte';
 	import Modal from '../messaging/Modal.svelte';
 	import FormattedDateTime from '../utils/FormattedDateTime.svelte';
@@ -15,7 +15,7 @@
 	const { feeds, aiSummaryEnabled }: Props = $props();
 
 	const pageSize = !browser || document.body.clientWidth > 1200 ? 20 : 4;
-	let activeFeed: FeedSourceKey = $state('general');
+	let activeFeed = $state('general');
 	let feed = $derived(feeds[activeFeed]);
 	let page: number = $state(1);
 	let pageStartIndex = $derived((page - 1) * pageSize);
@@ -28,7 +28,7 @@
 	let summaryOpen = $state(false);
 
 	interface FeedSelector {
-		value: FeedSourceKey;
+		value: string;
 		label: string;
 	}
 
@@ -38,7 +38,7 @@
 		{ value: 'tech', label: 'Tech' }
 	];
 
-	const setFeed = (val: FeedSourceKey) => {
+	const setFeed = (val: string) => {
 		if (summaryAborter) {
 			summaryAborter.abort();
 			isSummaryPending = false;
@@ -58,7 +58,7 @@
 		if (!summaryAborter.signal.aborted) summaryOpen = true;
 	};
 
-	const generateSummary = async (key: FeedSourceKey) => {
+	const generateSummary = async (key: string) => {
 		const feed = feeds[key];
 		const articles = feed.map((e) => e.summary);
 		const response = await fetch('/api/feeds/summarize', {

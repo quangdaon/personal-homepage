@@ -1,13 +1,13 @@
 import { OPENAI_SECRET_KEY } from '$env/static/private';
 import OpenAI from 'openai';
 import Parser from 'rss-parser';
-import { feedSources, type FeedSourceKey } from './config';
+import { feedSources } from './config';
 import type { FeedDetails, FeedItem } from './models';
 const parser = new Parser();
 
 export const isValidFeed = (source: string) => source in feedSources;
 
-export const getFeed = async (source: FeedSourceKey): Promise<FeedItem[]> => {
+export const getFeed = async (source: string): Promise<FeedItem[]> => {
 	const feedDetails: FeedDetails[] = feedSources[source];
 	const feeds = await Promise.all(
 		feedDetails.map(async (details) => {

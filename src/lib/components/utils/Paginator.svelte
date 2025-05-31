@@ -3,10 +3,10 @@
 		current: number;
 		max: number;
 		onNavigated: (page: number) => void;
-		hideRelevantControls?: boolean;
+		hideRelativeControls?: boolean;
 	}
 
-	const { current, max, onNavigated, hideRelevantControls = max < 5 }: Props = $props();
+	const { current, max, onNavigated, hideRelativeControls = max < 5 }: Props = $props();
 
 	const getOptions = (current: number, max: number) => {
 		const start = Math.max(1, Math.min(max - 4, current - 2));
@@ -18,10 +18,8 @@
 </script>
 
 <div class="paginator">
-	{#if !hideRelevantControls}
-		<button class="relative" disabled={options.includes(1)} onclick={() => onNavigated(1)}
-			>&laquo;</button
-		>
+	{#if !hideRelativeControls}
+		<button class="relative" disabled={current <= 1} onclick={() => onNavigated(1)}>&laquo;</button>
 		<button class="relative" disabled={current <= 1} onclick={() => onNavigated(current - 1)}
 			>&lsaquo;</button
 		>
@@ -29,13 +27,13 @@
 	{#each options as option}
 		<button disabled={option === current} onclick={() => onNavigated(option)}>{option}</button>
 	{/each}
-	{#if !hideRelevantControls}
+	{#if !hideRelativeControls}
 		<button class="relative" disabled={current >= max} onclick={() => onNavigated(current + 1)}
 			>&rsaquo;</button
 		>
 		<button
 			class="relative"
-			disabled={options.includes(max)}
+			disabled={current >= max}
 			title="Page {max}"
 			onclick={() => onNavigated(max)}>&raquo;</button
 		>
@@ -46,7 +44,7 @@
 	.paginator {
 		display: flex;
 		justify-content: center;
-    margin-top: auto;
+		margin-top: auto;
 		button {
 			cursor: pointer;
 			margin: 0 0.125em;
@@ -54,7 +52,7 @@
 			border: none;
 			color: inherit;
 			opacity: 0.7;
-      font-family: var(--font-mono);
+			font-family: var(--font-mono);
 			&:disabled,
 			&:hover {
 				opacity: 1;
@@ -62,9 +60,9 @@
 			&:disabled {
 				cursor: default;
 			}
-      &.relative:disabled {
-        opacity: 0.2;
-      }
+			&.relative:disabled {
+				opacity: 0.2;
+			}
 		}
 	}
 </style>

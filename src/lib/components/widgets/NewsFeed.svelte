@@ -50,7 +50,7 @@
 		summaryAborter = new AbortController();
 
 		isSummaryPending = true;
-		summary = await getCacheableSummary(activeFeed);
+		summary = await generateSummary(activeFeed);
 		isSummaryPending = false;
 
 		if (!summaryAborter.signal.aborted) summaryOpen = true;

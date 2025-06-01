@@ -2,7 +2,7 @@
 	import type { GitHubRepository } from '$lib/resources/github';
 	import Card from '../layout/Card.svelte';
 	import Tile from '../layout/Tile.svelte';
-	import FormattedDateTime from '../utils/FormattedDateTime.svelte';
+	import FormattedDate from '../utils/FormattedDate.svelte';
 	import Paginator from '../utils/Paginator.svelte';
 
 	type Props = {
@@ -38,7 +38,7 @@
 						<h4>{#if repo.private}🔒{/if} {title}</h4>
 						<p class="detail">
 							<b>{repo.language}</b> |
-							<i>Last Updated <FormattedDateTime date={repo.updated?.toString()} /></i>
+							<i>Last Updated <FormattedDate date={repo.updated} format="full" /></i>
 						</p>
 					</Tile>
 				</a>

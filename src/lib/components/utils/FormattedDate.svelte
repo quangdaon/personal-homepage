@@ -1,11 +1,13 @@
 <script lang="ts">
 	import { formatDateString } from '$lib/resources/temporal';
+	import type { DateFormat, DateLike } from '$lib/resources/temporal/date';
 
 	interface Props {
-		date: string;
+		date: DateLike;
+		format?: DateFormat;
 	}
 
-	const { date }: Props = $props();
+	const { date, format = 'date' }: Props = $props();
 </script>
 
-<time>{formatDateString(date)}</time>
+<time>{formatDateString(date, format)}</time>

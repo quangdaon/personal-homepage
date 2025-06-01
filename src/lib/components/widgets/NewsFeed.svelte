@@ -3,7 +3,7 @@
 	import type { FeedItem } from '$lib/resources/feeds';
 	import Card from '../layout/Card.svelte';
 	import Modal from '../messaging/Modal.svelte';
-	import FormattedDateTime from '../utils/FormattedDateTime.svelte';
+	import FormattedDate from '../utils/FormattedDate.svelte';
 	import Loader from '../utils/Loader.svelte';
 	import Paginator from '../utils/Paginator.svelte';
 
@@ -111,7 +111,7 @@
 					title={entry.source.title}
 				/>
 				{#if entry.date}
-					<FormattedDateTime date={entry.date} /> &mdash;
+					<FormattedDate date={entry.date} format="full" /> &mdash;
 				{/if}
 				<a href={entry.url}>{entry.title}</a>
 			</li>

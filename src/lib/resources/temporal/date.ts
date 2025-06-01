@@ -1,18 +1,37 @@
 export type DateLike = string | Date;
 
-export const formatDateTimeString = (date: DateLike) => {
-	return formatDateString(date, {
-		dateStyle: 'long',
-		timeStyle: 'short',
-		hour12: false
-	});
-};
+function isToday(date: Date) {
+	const today = new Date();
+	return (
+		date.getFullYear() === today.getFullYear() &&
+		date.getMonth() === today.getMonth() &&
+		date.getDate() === today.getDate()
+	);
+}
 
-export const formatDateString = (
-	date: DateLike,
-	options: Intl.DateTimeFormatOptions | null = null
-) => {
+const dateTimeFormats = {
+	date() {
+		return { dateStyle: 'long' };
+	},
+	full() {
+		return {
+			dateStyle: 'long',
+			timeStyle: 'short',
+			hour12: false
+		};
+	},
+	relative(date: Date) {
+		return isToday(date)
+			? { timeStyle: 'short', hour12: false }
+			: { month: 'short', day: '2-digit' };
+	}
+} satisfies Record<string, (date: Date) => Intl.DateTimeFormatOptions>;
+
+export type DateFormat = keyof typeof dateTimeFormats;
+
+export const formatDateString = (date: DateLike, format: DateFormat) => {
 	const parsedDate = new Date(date);
+	const options = dateTimeFormats[format](parsedDate);
 
 	return formatDate(parsedDate, options);
 };

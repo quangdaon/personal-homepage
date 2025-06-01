@@ -23,6 +23,7 @@ export const cacheable = async <T>(
 
 	const cacheResult: typeof cacheTable.$inferInsert = {
 		key,
+		saved: now,
 		expiration,
 		content: JSON.stringify(result)
 	};

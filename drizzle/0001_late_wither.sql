@@ -1,0 +1,1 @@
+ALTER TABLE "cache" ADD COLUMN "saved_at" timestamp;

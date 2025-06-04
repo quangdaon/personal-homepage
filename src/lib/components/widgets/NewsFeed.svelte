@@ -111,7 +111,7 @@
 					title={entry.source.title}
 				/>
 				{#if entry.date}
-					<FormattedDate date={entry.date} format="full" /> &mdash;
+					<FormattedDate date={entry.date} format="relative" /> &mdash;
 				{/if}
 				<a href={entry.url}>{entry.title}</a>
 			</li>

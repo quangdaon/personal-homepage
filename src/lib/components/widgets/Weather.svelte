@@ -11,7 +11,7 @@
 </script>
 
 <Card>
-	<h3 title="Last Updated: {formatDateString(weather.updated, 'full')}">Current Weather</h3>
+	<h3 title="Last Updated: {formatDateString(weather.updated, 'time')}">Current Weather</h3>
 	<p>Temperature: {weather.current.temperature.toFixed(0)} &deg;F</p>
 	<p>What it's like outside: {weather.current.weather.description}</p>
 </Card>

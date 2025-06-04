@@ -1,4 +1,5 @@
 import { readable } from 'svelte/store';
+import { formatDate } from './date';
 
 export interface ClockValues {
 	time: string;
@@ -9,14 +10,10 @@ export interface ClockValues {
 const getClock = (): ClockValues => {
 	const now = new Date();
 
-	const timeFormatter = new Intl.DateTimeFormat('en-US', { timeStyle: 'short', hour12: false });
-	const fullTimeFormatter = new Intl.DateTimeFormat('en-US', { timeStyle: 'long', hour12: false });
-	const dateFormatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'full' });
-	
 	return {
-		time: timeFormatter.format(now),
-		fullTime: fullTimeFormatter.format(now),
-		date: dateFormatter.format(now)
+		time: formatDate(now, 'time'),
+		fullTime: formatDate(now, 'fullTime'),
+		date: formatDate(now, 'fullDate')
 	};
 };
 

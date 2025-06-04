@@ -13,6 +13,15 @@ const dateTimeFormats = {
 	date() {
 		return { dateStyle: 'long' };
 	},
+	fullDate() {
+		return { dateStyle: 'full' };
+	},
+	time() {
+		return { timeStyle: 'short', hour12: false };
+	},
+	fullTime() {
+		return { timeStyle: 'long', hour12: false };
+	},
 	full() {
 		return {
 			dateStyle: 'long',
@@ -29,18 +38,12 @@ const dateTimeFormats = {
 
 export type DateFormat = keyof typeof dateTimeFormats;
 
-export const formatDateString = (date: DateLike, format: DateFormat) => {
-	const parsedDate = new Date(date);
-	const options = dateTimeFormats[format](parsedDate);
+export const formatDateString = (date: DateLike, format: DateFormat) =>
+	formatDate(new Date(date), format);
 
-	return formatDate(parsedDate, options);
-};
-
-export const formatDate = (
-	convertedDate: Date,
-	options: Intl.DateTimeFormatOptions | null = null
-) => {
-	const formatter = new Intl.DateTimeFormat('en-US', options ?? { dateStyle: 'long' });
+export const formatDate = (convertedDate: Date, format: DateFormat) => {
+	const options = dateTimeFormats[format](convertedDate);
+	const formatter = new Intl.DateTimeFormat('en-US', options);
 	return formatter.format(convertedDate);
 };
 

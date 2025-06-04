@@ -14,7 +14,7 @@ export const shipmentStatusesTable = pgTable('shipment_statuses', {
 	label: varchar('label', { length: 50 }).notNull().unique()
 });
 
-export const shipmentProvidersTable = pgTable('shipment_providers', {
+export const shipmentCarriersTable = pgTable('shipment_carriers', {
 	id: serial('id').primaryKey(),
 	label: varchar('label', { length: 50 }).notNull().unique(),
 	icon: varchar('icon', { length: 256 })
@@ -30,7 +30,7 @@ export const shipmentsTable = pgTable('shipments', {
 	lastChecked: timestamp('last_checked_at'),
 	thumbnailUrl: varchar('thumbnail_url', { length: 256 }),
 	statusId: integer('status_id').references(() => shipmentStatusesTable.id),
-	providerId: integer('provider_id').references(() => shipmentProvidersTable.id)
+	carrierId: integer('carrier_id').references(() => shipmentCarriersTable.id)
 });
 
 export const shipmentRelations = relations(shipmentsTable, ({ one }) => ({
@@ -38,8 +38,8 @@ export const shipmentRelations = relations(shipmentsTable, ({ one }) => ({
 		fields: [shipmentsTable.statusId],
 		references: [shipmentStatusesTable.id]
 	}),
-	provider: one(shipmentProvidersTable, {
-		fields: [shipmentsTable.providerId],
-		references: [shipmentProvidersTable.id]
+	carrier: one(shipmentCarriersTable, {
+		fields: [shipmentsTable.carrierId],
+		references: [shipmentCarriersTable.id]
 	})
 }));

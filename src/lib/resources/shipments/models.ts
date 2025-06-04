@@ -1,5 +1,5 @@
 import type {
-	shipmentProvidersTable,
+	shipmentCarriersTable,
 	shipmentsTable,
 	shipmentStatusesTable
 } from '$lib/server/db/schema';
@@ -12,4 +12,4 @@ export interface ShipmentDetails {
 
 export type ShipmentTable = typeof shipmentsTable.$inferSelect & {
 	status: typeof shipmentStatusesTable.$inferSelect | null;
-} & { provider: typeof shipmentProvidersTable.$inferSelect | null };
+} & { carrier: typeof shipmentCarriersTable.$inferSelect | null };

@@ -5,7 +5,7 @@ import type { ShipmentDetails, ShipmentTable } from './models';
 export const getShipments = async (): Promise<ShipmentDetails[]> => {
 	const shipments = await db.query.shipmentsTable.findMany({
 		with: {
-			provider: true,
+			carrier: true,
 			status: true
 		}
 	});

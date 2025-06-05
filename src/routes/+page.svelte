@@ -1,9 +1,9 @@
 <script lang="ts">
-	import Clock from '$lib/components/widgets/Clock.svelte';
-	import GitHubRepositories from '$lib/components/widgets/GitHubRepositories.svelte';
-	import NewsFeed from '$lib/components/widgets/NewsFeed.svelte';
+	import Clock from '$lib/components/widgets/clock/Clock.svelte';
+	import Repositories from '$lib/components/widgets/github/Repositories.svelte';
+	import NewsFeed from '$lib/components/widgets/feeds/NewsFeed.svelte';
 	import Shipments from '$lib/components/widgets/shipments/Shipments.svelte';
-	import Weather from '$lib/components/widgets/Weather.svelte';
+	import Weather from '$lib/components/widgets/weather/Weather.svelte';
 	import type { PageData } from './$types';
 
 	interface Props {
@@ -27,7 +27,7 @@
 			<NewsFeed {feeds} {aiSummaryEnabled} />
 		</div>
 		<div class="aside">
-			<GitHubRepositories repositories={gitHubRepositories} />
+			<Repositories repositories={gitHubRepositories} />
 		</div>
 	</div>
 </main>

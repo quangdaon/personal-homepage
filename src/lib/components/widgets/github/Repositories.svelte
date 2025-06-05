@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { GitHubRepository } from '$lib/resources/github';
-	import Card from '../layout/Card.svelte';
-	import Tile from '../layout/Tile.svelte';
-	import FormattedDate from '../utils/FormattedDate.svelte';
-	import Paginator from '../utils/Paginator.svelte';
+	import Card from '../../layout/Card.svelte';
+	import Tile from '../../layout/Tile.svelte';
+	import FormattedDate from '../../utils/FormattedDate.svelte';
+	import Paginator from '../../utils/Paginator.svelte';
 
 	type Props = {
 		repositories: GitHubRepository[];
@@ -27,7 +27,9 @@
 </script>
 
 <Card>
-	<h3>Recent Repositories</h3>
+	{#snippet title()}
+		Recent Repositories
+	{/snippet}
 
 	<ul>
 		{#each pageRepos as repo}
@@ -35,7 +37,10 @@
 			<li>
 				<a href={repo.url}>
 					<Tile>
-						<h4>{#if repo.private}🔒{/if} {title}</h4>
+						<h4>
+							{#if repo.private}🔒{/if}
+							{title}
+						</h4>
 						<p class="detail">
 							<b>{repo.language}</b> |
 							<i>Last Updated <FormattedDate date={repo.updated} format="full" /></i>

@@ -11,20 +11,21 @@
 </script>
 
 <Card>
-	<h3>Upcoming Deliveries</h3>
+	{#snippet title()}
+		Upcoming Deliveries
+	{/snippet}
 	<ul>
 		{#each shipments as shipment}
 			<li>
-        
 				<a href={shipment.trackingUrl}>
 					<Tile>
 						<h4>{shipment.label}</h4>
 						<p class="detail">
-              {shipment.message}
+							{shipment.message}
 						</p>
 					</Tile>
 				</a>
-      </li>
+			</li>
 		{/each}
 	</ul>
 </Card>

@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import type { FeedItem } from '$lib/resources/feeds';
-	import Card from '../layout/Card.svelte';
-	import Modal from '../messaging/Modal.svelte';
-	import FormattedDate from '../utils/FormattedDate.svelte';
-	import Loader from '../utils/Loader.svelte';
-	import Paginator from '../utils/Paginator.svelte';
+	import Card from '../../layout/Card.svelte';
+	import Modal from '../../messaging/Modal.svelte';
+	import FormattedDate from '../../utils/FormattedDate.svelte';
+	import Loader from '../../utils/Loader.svelte';
+	import Paginator from '../../utils/Paginator.svelte';
 
 	interface Props {
 		feeds: Record<string, FeedItem[]>;
@@ -76,9 +76,11 @@
 </script>
 
 <Card>
-	<h3>
+	{#snippet title()}
 		Latest News
+	{/snippet}
 
+	{#snippet controls()}
 		{#if aiSummaryEnabled}
 			<button
 				disabled={isSummaryPending}
@@ -93,7 +95,8 @@
 				{/if}
 			</button>
 		{/if}
-	</h3>
+	{/snippet}
+
 	<div class="nav">
 		{#each feedSelectors as selector}
 			<button onclick={() => setFeed(selector.value)} class:active={activeFeed === selector.value}>
@@ -126,15 +129,6 @@
 </Modal>
 
 <style lang="scss">
-	h3 {
-		display: flex;
-		justify-content: space-between;
-		button {
-			background: none;
-			border: none;
-			color: var(--color-foreground);
-		}
-	}
 	.nav {
 		button {
 			margin-right: 0.5em;

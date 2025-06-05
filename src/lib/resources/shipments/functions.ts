@@ -26,8 +26,8 @@ function getMessage(e: ShipmentTable): string {
 		case 'unchecked':
 			return `Pending data retrieval...`;
 		case 'delivered':
-			return `Package delivered ${formatDateString(e.expected!, 'relative')}`;
+			return `Package delivered ${formatDateString(e.deliveryWindowEnd!, 'relative')}`;
 	}
 
-	return `${e.status.label} | Expected ${formatDateString(e.expected!, 'full')}`;
+	return `${e.status.label} | Expected ${formatDateString(e.deliveryWindowEnd!, 'full')}`;
 }

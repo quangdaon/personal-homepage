@@ -1,14 +1,15 @@
 import { relations } from 'drizzle-orm';
-import { integer, pgTable, serial, timestamp, varchar } from 'drizzle-orm/pg-core';
+import { boolean, integer, pgTable, serial, timestamp, varchar } from 'drizzle-orm/pg-core';
 
 export const shipmentStatusesTable = pgTable('shipment_statuses', {
 	id: serial('id').primaryKey(),
 	key: varchar('key', { length: 50 }).notNull().unique(),
-	label: varchar('label', { length: 50 }).notNull().unique()
+	label: varchar('label', { length: 50 }).notNull().unique(),
+	final: boolean('is_final').notNull()
 });
 
 export const shipmentCarriersTable = pgTable('shipment_carriers', {
-  id: serial('id').primaryKey(),
+	id: serial('id').primaryKey(),
 	key: varchar('key', { length: 50 }).notNull().unique(),
 	label: varchar('label', { length: 50 }).notNull().unique(),
 	icon: varchar('icon', { length: 256 })
@@ -19,7 +20,8 @@ export const shipmentsTable = pgTable('shipments', {
 	label: varchar('label').notNull(),
 	trackingNumber: varchar('tracking_number', { length: 100 }).notNull().unique(),
 	trackingUrl: varchar('tracking_url', { length: 256 }),
-	expected: timestamp('expected_at'),
+	deliveryWindowStart: timestamp('delivery_window_start'),
+	deliveryWindowEnd: timestamp('delivery_window_end'),
 	lastLocation: varchar('last_location', { length: 100 }),
 	lastChecked: timestamp('last_checked_at'),
 	thumbnailUrl: varchar('thumbnail_url', { length: 256 }),

@@ -35,7 +35,16 @@ export const getFeed = async (source: string): Promise<FeedItem[]> => {
 		return entries;
 	});
 
-	return items.toSorted((a, b) => (b.date > a.date ? 1 : -1));
+	const seenUrls = new Set<string>();
+	const filteredItems = items.filter((item) => {
+		if (seenUrls.has(item.url)) {
+			return false;
+		}
+		seenUrls.add(item.url);
+		return true;
+	});
+
+	return filteredItems.toSorted((a, b) => (b.date > a.date ? 1 : -1));
 };
 
 export const generateAiSummary = async (articles: string[]) => {

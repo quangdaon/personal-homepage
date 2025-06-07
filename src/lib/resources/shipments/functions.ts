@@ -4,8 +4,8 @@ import { shipmentsTable } from './db';
 import type { AddShipmentModel, CarrierDetails, ShipmentDetails, ShipmentTable } from './models';
 
 const formatString = (str: string, ...args: string[]) => {
-  return str.replace(/{(\d+)}/g, (_, i) => args[i]);
-}
+	return str.replace(/{(\d+)}/g, (_, i) => args[i]);
+};
 
 export const getShipments = async (): Promise<ShipmentDetails[]> => {
 	const shipments = await db.query.shipmentsTable.findMany({
@@ -48,7 +48,11 @@ export const addShipment = async (model: AddShipmentModel) => {
 };
 
 export const getCarriers = async (): Promise<CarrierDetails[]> => {
-	const shipments = await db.query.shipmentCarriersTable.findMany();
+	const shipments = await db.query.shipmentCarriersTable.findMany({
+		orderBy(table, { asc }) {
+			return asc(table.id);
+		}
+	});
 
 	const results: CarrierDetails[] = shipments.map((e) => ({
 		key: e.key,
@@ -64,6 +68,8 @@ function getMessage(e: ShipmentTable): string {
 	switch (e.status.key) {
 		case 'unchecked':
 			return `Pending data retrieval...`;
+		case 'unsupported':
+			return `Shipped by ${e.carrier?.label}. Tracking is not supported.`;
 		case 'delivered':
 			return `Package delivered ${formatDateString(e.deliveryWindowEnd!, 'relative')}`;
 	}

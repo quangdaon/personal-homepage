@@ -1,17 +1,29 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte';
+
 	interface Props {
 		open?: boolean;
-		children: () => any;
-		onClosed: () => void;
+		children: Snippet;
+		title?: Snippet;
+		onClosed?: () => void;
 	}
 
-	let { open = false, children, onClosed }: Props = $props();
+	let { open = false, children, title, onClosed }: Props = $props();
+	let contentElement: HTMLElement | undefined = $state();
 
 	const bindKeydown = (evt: KeyboardEvent) => {
 		if (evt.key === 'Escape') {
 			evt.preventDefault();
-			onClosed();
+			onClosed?.();
 		}
+	};
+
+	const handleWrapperClick = (evt: MouseEvent) => {
+		const target = evt.target as HTMLElement;
+
+		if (contentElement && contentElement.contains(target)) return;
+
+		onClosed?.();
 	};
 </script>
 
@@ -20,12 +32,15 @@
 <!-- TODO: Migrate to <dialog> if they ever fix the discrepancy between oepn vs .showModal -->
 
 {#if open}
-	<!-- svelte-ignore a11y_click_events_have_key_events -->
-	<!-- svelte-ignore a11y_no_static_element_interactions -->
-	<div class="wrapper" onclick={() => onClosed()}>
-		<div class="content">
-			<button class="close" onclick={() => onClosed()}>&times;</button>
-			{@render children()}
+	<div class="wrapper" onclick={handleWrapperClick} tabindex="-1" aria-hidden="true">
+		<div class="content" bind:this={contentElement}>
+			<h3 class="header">
+				{@render title?.()}
+				<button class="close" onclick={() => onClosed?.()}>&times;</button>
+			</h3>
+			<div class="body">
+				{@render children()}
+			</div>
 		</div>
 	</div>
 {/if}
@@ -44,18 +59,30 @@
 		align-items: center;
 	}
 
+	.header {
+		display: flex;
+		padding: 0.25em 0.5em 0 1em;
+		margin: 0;
+	}
+
 	.close {
-		float: right;
 		font-size: 2em;
 		color: inherit;
 		background: none;
 		border: none;
+		margin-left: auto;
+		padding: 0;
+		line-height: 0.65;
 	}
 
 	.content {
+		min-width: 30vw;
 		max-width: 60vw;
 		margin: auto;
-		padding: 1em;
 		background: #000;
+	}
+
+	.body {
+		padding: 0 1em 1em;
 	}
 </style>

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
+	import IconButton from '$lib/components/utils/IconButton.svelte';
 	import type { FeedItem } from '$lib/resources/feeds';
 	import Card from '../../layout/Card.svelte';
 	import Modal from '../../messaging/Modal.svelte';
@@ -82,18 +83,12 @@
 
 	{#snippet controls()}
 		{#if aiSummaryEnabled}
-			<button
-				disabled={isSummaryPending}
+			<IconButton
 				onclick={() => summarize()}
-				title="Summarize"
-				aria-label="Summarize"
-			>
-				{#if isSummaryPending}
-					<Loader />
-				{:else}
-					<iconify-icon icon="subway:paragraph-5"></iconify-icon>
-				{/if}
-			</button>
+				loading={isSummaryPending}
+				icon="subway:paragraph-5"
+				label="Summarize"
+			/>
 		{/if}
 	{/snippet}
 
@@ -125,6 +120,9 @@
 </Card>
 
 <Modal open={summaryOpen} onClosed={() => (summaryOpen = false)}>
+	{#snippet title()}
+		{feedSelectors.find(e => e.value === activeFeed)?.label} News Summary
+	{/snippet}
 	{summary}
 </Modal>
 

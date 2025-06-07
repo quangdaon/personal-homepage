@@ -56,7 +56,7 @@ export const generateAiSummary = async (articles: string[]) => {
 		{
 			role: 'system',
 			content:
-				'Given a JSON list of news articles, generate a very brief TLDR-style summary of the most interesting or impactful developments. Output your response as a single short plaintext paragraph (e.g. no Markdown).'
+				'Given a JSON list of news article summaries, generate a very brief TLDR-style summary of the most interesting or impactful developments. Output your response as a single short plaintext paragraph (e.g. no Markdown).'
 		},
 		{
 			role: 'user',

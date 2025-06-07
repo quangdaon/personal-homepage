@@ -1,2 +1,2 @@
 export type { ShipmentDetails } from './models';
-export { getShipments } from './functions';
+export { getShipments, addShipment, getCarriers } from './functions';

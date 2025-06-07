@@ -1,0 +1,1 @@
+ALTER TABLE "shipment_carriers" ADD COLUMN "tracking_url_format" varchar(256);

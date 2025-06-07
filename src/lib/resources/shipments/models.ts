@@ -10,6 +10,17 @@ export interface ShipmentDetails {
 	trackingUrl: string;
 }
 
+export interface CarrierDetails {
+	key: string;
+	label: string;
+}
+
+export interface AddShipmentModel {
+	label: string;
+	trackingNumber: string;
+	carrier: string;
+}
+
 export type ShipmentTable = typeof shipmentsTable.$inferSelect & {
 	status: typeof shipmentStatusesTable.$inferSelect | null;
 } & { carrier: typeof shipmentCarriersTable.$inferSelect | null };

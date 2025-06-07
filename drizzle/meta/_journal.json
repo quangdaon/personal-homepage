@@ -43,6 +43,13 @@
       "when": 1749093873684,
       "tag": "0005_acoustic_triathlon",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1749320313047,
+      "tag": "0006_majestic_nightcrawler",
+      "breakpoints": true
     }
   ]
 }

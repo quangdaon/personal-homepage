@@ -35,19 +35,21 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;
-	}
+		:global(a) {
+			color: inherit;
+		}
 
-	.card :global(a) {
-		color: inherit;
-	}
+		h3 {
+			display: flex;
+			justify-content: space-between;
+		}
 
-	h3 {
-		display: flex;
-		justify-content: space-between;
-		:global(button) {
-			background: none;
-			border: none;
-			color: var(--color-foreground);
+		.controls {
+			display: none;
+		}
+
+		&:hover .controls {
+			display: block;
 		}
 	}
 </style>

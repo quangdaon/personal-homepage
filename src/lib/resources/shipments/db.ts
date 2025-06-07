@@ -12,7 +12,8 @@ export const shipmentCarriersTable = pgTable('shipment_carriers', {
 	id: serial('id').primaryKey(),
 	key: varchar('key', { length: 50 }).notNull().unique(),
 	label: varchar('label', { length: 50 }).notNull().unique(),
-	icon: varchar('icon', { length: 256 })
+	icon: varchar('icon', { length: 256 }),
+	trackingUrlFormat: varchar('tracking_url_format', { length: 256 })
 });
 
 export const shipmentsTable = pgTable('shipments', {

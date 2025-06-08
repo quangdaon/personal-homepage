@@ -1,4 +1,5 @@
 <script lang="ts">
+	import IconButton from '$lib/components/utils/IconButton.svelte';
 	import type { GitHubRepository } from '$lib/resources/github';
 	import Card from '../../layout/Card.svelte';
 	import Tile from '../../layout/Tile.svelte';
@@ -9,7 +10,8 @@
 		repositories: GitHubRepository[];
 	};
 
-	const { repositories }: Props = $props();
+	let { repositories }: Props = $props();
+	let loading = $state(false);
 
 	const pageSize = 6;
 	let page: number = $state(1);
@@ -24,11 +26,22 @@
 
 		return title;
 	};
+	
+	const refreshRepos = async () => {
+		loading = true;
+		const resp = await fetch('/api/github/repositories?bustCache=true');
+		repositories = await resp.json();
+		loading = false;
+	};
 </script>
 
 <Card>
 	{#snippet title()}
 		Recent Repositories
+	{/snippet}
+
+	{#snippet controls()}
+		<IconButton {loading} label="Refresh" icon="mdi:refresh" onclick={refreshRepos} />
 	{/snippet}
 
 	<ul>

@@ -3,19 +3,25 @@ import { cacheTable } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
 import type { TimeUnit } from '$lib/resources/temporal';
 
-export const cacheable = async <T>(
-	key: string,
-	resolver: () => T | Promise<T>,
-	durationMs: TimeUnit
-): Promise<T> => {
-	const now = new Date();
-	const cached = await db.select().from(cacheTable).where(eq(cacheTable.key, key)).limit(1);
+export interface CacheConfig<T> {
+	resolver: () => T | Promise<T>;
+	duration: TimeUnit;
+	bust?: boolean;
+}
 
-	if (cached.length && (cached[0].expiration === null || cached[0].expiration > now)) {
-		return cached[0].content as T;
+export const cacheable = async <T>(key: string, config: CacheConfig<T>): Promise<T> => {
+	const { resolver, duration, bust = false } = config;
+	const now = new Date();
+
+	if (!bust) {
+		const cached = await db.select().from(cacheTable).where(eq(cacheTable.key, key)).limit(1);
+
+		if (cached.length && (cached[0].expiration === null || cached[0].expiration > now)) {
+			return cached[0].content as T;
+		}
 	}
 
-	const expiration = durationMs ? new Date(now.getTime() + durationMs) : null;
+	const expiration = duration ? new Date(now.getTime() + duration) : null;
 
 	const resolved = resolver();
 

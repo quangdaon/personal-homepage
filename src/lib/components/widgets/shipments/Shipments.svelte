@@ -39,13 +39,11 @@
 	{/snippet}
 
 	{#snippet controls()}
-		<IconButton label="Refresh" icon="mdi:refresh" onclick={refreshShipments} />
 		<IconButton label="Add Shipment" icon="mdi:plus" onclick={startAddShipment} />
+		<IconButton {loading} label="Refresh" icon="mdi:refresh" onclick={refreshShipments} />
 	{/snippet}
 
-	{#if loading}
-		<Loader />
-	{:else if !shipments.length}
+	{#if !shipments.length}
 		<p>No upcoming deliveries.</p>
 	{:else}
 		<ul>

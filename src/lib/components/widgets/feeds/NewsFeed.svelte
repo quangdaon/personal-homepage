@@ -2,10 +2,10 @@
 	import { browser } from '$app/environment';
 	import IconButton from '$lib/components/utils/IconButton.svelte';
 	import type { FeedItem } from '$lib/resources/feeds';
+	import { tick } from 'svelte';
 	import Card from '../../layout/Card.svelte';
 	import Modal from '../../messaging/Modal.svelte';
 	import FormattedDate from '../../utils/FormattedDate.svelte';
-	import Loader from '../../utils/Loader.svelte';
 	import Paginator from '../../utils/Paginator.svelte';
 
 	interface Props {
@@ -13,7 +13,10 @@
 		aiSummaryEnabled: boolean;
 	}
 
-	const { feeds, aiSummaryEnabled }: Props = $props();
+	const props: Props = $props();
+
+	const aiSummaryEnabled = props.aiSummaryEnabled;
+	let feeds = $state(props.feeds);
 
 	const pageSize = !browser || document.body.clientWidth > 1200 ? 20 : 4;
 	let activeFeed = $state('general');
@@ -27,6 +30,9 @@
 	let isSummaryPending = $state(false);
 	let summary = $state('');
 	let summaryOpen = $state(false);
+
+	let feedAborter: AbortController | undefined;
+	let isFeedPending = $state(false);
 
 	interface FeedSelector {
 		value: string;
@@ -43,6 +49,8 @@
 		if (summaryAborter) {
 			summaryAborter.abort();
 			isSummaryPending = false;
+			feedAborter?.abort();
+			isFeedPending = false;
 		}
 		if (val === activeFeed) return;
 		activeFeed = val;
@@ -74,6 +82,19 @@
 
 		return result.content;
 	};
+
+	const refreshFeed = async () => {
+		feedAborter = new AbortController();
+		const feedKey = activeFeed;
+		isFeedPending = true;
+		const resp = await fetch(`/api/feeds/${feedKey}?bustCache=true`);
+		feeds = { ...feeds, [feedKey]: await resp.json() };
+		isFeedPending = false;
+
+		if (feedAborter.signal.aborted) return;
+
+		page = 1;
+	};
 </script>
 
 <Card>
@@ -90,6 +111,7 @@
 				label="Summarize"
 			/>
 		{/if}
+		<IconButton onclick={refreshFeed} loading={isFeedPending} icon="mdi:refresh" label="Refresh" />
 	{/snippet}
 
 	<div class="nav">
@@ -121,7 +143,7 @@
 
 <Modal open={summaryOpen} onClosed={() => (summaryOpen = false)}>
 	{#snippet title()}
-		{feedSelectors.find(e => e.value === activeFeed)?.label} News Summary
+		{feedSelectors.find((e) => e.value === activeFeed)?.label} News Summary
 	{/snippet}
 	{summary}
 </Modal>

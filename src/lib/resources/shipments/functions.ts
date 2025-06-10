@@ -1,24 +1,38 @@
 import { db } from '$lib/server/db';
-import { formatDateString } from '../temporal';
-import { shipmentsTable } from './db';
+import { formatDateString, Time } from '../temporal';
+import { shipmentCarriersTable, shipmentsTable, shipmentStatusesTable } from './db';
 import type { AddShipmentModel, CarrierDetails, ShipmentDetails, ShipmentTable } from './models';
+import { SHIPMENTS_POST_DELIVERY_THRESHOLD } from '$env/static/private';
+import { eq, lt, or, sql } from 'drizzle-orm';
 
 const formatString = (str: string, ...args: string[]) => {
 	return str.replace(/{(\d+)}/g, (_, i) => args[i]);
 };
 
 export const getShipments = async (): Promise<ShipmentDetails[]> => {
-	const shipments = await db.query.shipmentsTable.findMany({
-		with: {
-			carrier: true,
-			status: true
-		}
-	});
+	const shipments = await db
+		.select()
+		.from(shipmentsTable)
+		.leftJoin(shipmentStatusesTable, eq(shipmentsTable.statusId, shipmentStatusesTable.id))
+		.where(
+			or(
+				sql`${shipmentStatusesTable.final} = false`,
+				lt(
+					sql`EXTRACT(EPOCH FROM NOW() - ${shipmentsTable.deliveryWindowEnd}) * 1000`,
+					Time.days(+SHIPMENTS_POST_DELIVERY_THRESHOLD)
+				)
+			)
+		)
+		.leftJoin(shipmentCarriersTable, eq(shipmentsTable.carrierId, shipmentCarriersTable.id));
 
 	const results: ShipmentDetails[] = shipments.map((e) => ({
-		label: e.label,
-		message: getMessage(e),
-		trackingUrl: e.trackingUrl ?? ''
+		label: e.shipments.label,
+		message: getMessage({
+			...e.shipments,
+			status: e.shipment_statuses,
+			carrier: e.shipment_carriers
+		}),
+		trackingUrl: e.shipments.trackingUrl ?? ''
 	}));
 
 	return results;

@@ -3,7 +3,7 @@ import { formatDateString, Time } from '../temporal';
 import { shipmentCarriersTable, shipmentsTable, shipmentStatusesTable } from './db';
 import type { AddShipmentModel, CarrierDetails, ShipmentDetails, ShipmentTable } from './models';
 import { SHIPMENTS_POST_DELIVERY_THRESHOLD } from '$env/static/private';
-import { eq, lt, or, sql } from 'drizzle-orm';
+import { and, eq, isNull, lt, or, sql } from 'drizzle-orm';
 
 const formatString = (str: string, ...args: string[]) => {
 	return str.replace(/{(\d+)}/g, (_, i) => args[i]);
@@ -17,6 +17,13 @@ export const getShipments = async (): Promise<ShipmentDetails[]> => {
 		.where(
 			or(
 				sql`${shipmentStatusesTable.final} = false`,
+				and(
+					isNull(shipmentsTable.deliveryWindowEnd),
+					lt(
+						sql`EXTRACT(EPOCH FROM NOW() - ${shipmentsTable.lastChecked}) * 1000`,
+						Time.days(+SHIPMENTS_POST_DELIVERY_THRESHOLD)
+					)
+				),
 				lt(
 					sql`EXTRACT(EPOCH FROM NOW() - ${shipmentsTable.deliveryWindowEnd}) * 1000`,
 					Time.days(+SHIPMENTS_POST_DELIVERY_THRESHOLD)
@@ -88,5 +95,10 @@ function getMessage(e: ShipmentTable): string {
 			return `Package delivered ${formatDateString(e.deliveryWindowEnd!, 'relative')}`;
 	}
 
-	return `${e.status.label} | Expected ${formatDateString(e.deliveryWindowEnd!, 'full')}`;
+	let message = e.status.label;
+
+	if (e.deliveryWindowEnd)
+		message = `${message} | Expected ${formatDateString(e.deliveryWindowEnd, 'full')}`;
+
+	return message;
 }
